@@ -1,3 +1,3 @@
-export function hello(who: String): String {
+export function hello(who: string): string {
   return `Hello ${who}!`;
 }
