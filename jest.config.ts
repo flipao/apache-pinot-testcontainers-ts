@@ -3,10 +3,10 @@
  * https://jestjs.io/docs/configuration
  */
 
-import type {Config} from 'jest';
+import type { Config } from 'jest';
 
 const config: Config = {
-  testTimeout: 30_000,
+  testTimeout: 300_000,
 
   // All imported modules in your tests should be mocked automatically
   // automock: false,

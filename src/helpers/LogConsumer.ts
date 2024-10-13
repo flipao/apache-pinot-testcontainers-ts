@@ -19,11 +19,14 @@ export function logConsumer(name: string) {
     });
     stream.on('end', () => {
       console.log(`[${name}]`, 'stream closed');
+      clearInterval(intervalId);
     });
   };
 }
 
 function flushLogs() {
-  console.log(logBuffer.join('\n'));
-  logBuffer.splice(0, MAX_BUFFER_SIZE);
+  if (logBuffer.length > 0) {
+    console.log(logBuffer.join('\n'));
+    logBuffer.splice(0, MAX_BUFFER_SIZE);
+  }
 }

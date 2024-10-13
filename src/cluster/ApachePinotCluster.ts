@@ -133,21 +133,13 @@ export default class ApachePinotCluster {
   }
 
   public async start(): Promise<boolean> {
-    console.log('>>>>>> STARTING <<<<<<<<');
     this.startedZookeeper = await this.zookeeper.start();
-    console.log('>>>>>> ZOOKEEPER STARTED <<<<<<<<');
     this.startedPinotController = await this.pinotController.start();
-    console.log('>>>>>> PINOT CONTROLLER STARTED <<<<<<<<');
     this.startedPinotBroker = await this.pinotBroker.start();
-    console.log('>>>>>> PINOT BROKER STARTED <<<<<<<<');
     this.startedPinotServer = await this.pinotServer.start();
-    console.log('>>>>>> PINOT SERVER STARTED <<<<<<<<');
     if (this.pinotMinion) {
       this.startedPinotMinion = await this.pinotMinion.start();
-      console.log('>>>>>> PINOT MINION STARTED <<<<<<<<');
     }
-    console.log('>>>>>> ALL STARTED <<<<<<<<');
-
     return true;
   }
 
@@ -168,7 +160,6 @@ export default class ApachePinotCluster {
     const regEx = new RegExp(
       `^(?:.*?)Started Pinot \\[${service}\\] instance(?:.*?)$`,
     );
-    console.log('>>>>>>>>> REG EXP <<<<<<<<<<<', regEx);
     return Wait.forLogMessage(regEx);
   }
 

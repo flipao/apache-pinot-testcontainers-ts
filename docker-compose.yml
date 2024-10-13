@@ -6,8 +6,7 @@ networks:
 
 services:
   zookeeper:
-    image: zookeeper:3.5
-    platform: linux/arm64/v8
+    image: zookeeper:3.9.2
     hostname: zookeeper
     container_name: zookeeper
     ports:
@@ -19,7 +18,7 @@ services:
       - pinot-demo
 
   pinot-controller:
-    image: apachepinot/pinot:release-1.0.0-21-openjdk
+    image: apachepinot/pinot:latest-21-openjdk
     command: "StartController -zkAddress zookeeper:2181"
     hostname: pinot-controller
     container_name: pinot-controller
@@ -34,7 +33,7 @@ services:
       - pinot-demo
 
   pinot-broker:
-    image: apachepinot/pinot:release-1.0.0-21-openjdk
+    image: apachepinot/pinot:latest-21-openjdk
     command: "StartBroker -zkAddress zookeeper:2181"
     restart: unless-stopped
     hostname: pinot-broker
@@ -49,7 +48,7 @@ services:
       - pinot-demo
 
   pinot-server:
-    image: apachepinot/pinot:release-1.0.0-21-openjdk
+    image: apachepinot/pinot:latest-21-openjdk
     command: "StartServer -zkAddress zookeeper:2181"
     restart: unless-stopped
     hostname: pinot-server
@@ -63,20 +62,20 @@ services:
     networks:
       - pinot-demo
 
-  kafka:
-    image: confluentinc/cp-kafka:latest
-    hostname: kafka
-    container_name: kafka
-    ports:
-      - "29092:29092"
-    environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    depends_on:
-      - zookeeper
-    networks:
-      - pinot-demo
+  # kafka:
+  #   image: confluentinc/cp-kafka:latest
+  #   hostname: kafka
+  #   container_name: kafka
+  #   ports:
+  #     - "29092:29092"
+  #   environment:
+  #     KAFKA_BROKER_ID: 1
+  #     KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+  #     KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+  #     KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+  #     KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+  #     KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+  #   depends_on:
+  #     - zookeeper
+  #   networks:
+  #     - pinot-demo
