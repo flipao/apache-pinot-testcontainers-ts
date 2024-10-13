@@ -26,7 +26,7 @@ export function logConsumer(name: string) {
 
 function flushLogs() {
   if (logBuffer.length > 0) {
-    console.log(logBuffer.join('\n'));
+    console.log(logBuffer.join(''));
     logBuffer.splice(0, MAX_BUFFER_SIZE);
   }
 }
